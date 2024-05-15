@@ -1,7 +1,12 @@
 import "./App.css";
+import LoginSignup from "./Components/LoginSignup/LoginSignup";
 
 function App() {
-  return <>Hi let's start working</>;
+  return (
+    <div>
+      <LoginSignup/>
+    </div>
+  );
 }
 
 export default App;

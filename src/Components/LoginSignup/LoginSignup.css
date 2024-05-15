@@ -1,0 +1,124 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    margin-top: 200px;
+    width: 100%;
+    max-width: 600px; /* Ensures container does not exceed 600px */
+    background: #fff;
+    padding: 30px 20px; /* Adds padding on smaller screens */
+    box-sizing: border-box; /* Includes padding and border in the element's total width and height */
+}
+
+.header{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 9px;
+    width: 100%;
+    margin-top: 30px;
+}
+
+.text {
+    color: #3c009d;
+    font-size: 48px;
+    font-weight: 700;
+    text-align: center; /* Centers header text on smaller screens */
+}
+
+.underline{
+    width: 61px;
+    height: 6px;
+    background: #3c009d;
+    border-radius: 9px;
+}
+
+.inputs{
+    margin-top: 55px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.input{
+    display: flex;
+    align-items: center;
+    margin: auto;
+    width: 100%;
+    max-width: 480px; /* Ensures input does not exceed 480px */
+    height: 80px;
+    background: #eaeaea;
+    border-radius: 6px;
+}
+
+.input img{
+    margin: 0 30px;
+}
+
+.input input{
+    height: 50px;
+    width: calc(100% - 60px); /* Adjusts width taking padding into account */
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #797979;
+    font-size: 19px;
+}
+
+.error {
+    color: red; /* Error message color */
+    font-size: 14px; /* Smaller font size for error messages */
+    padding-left: 60px; /* Aligns with input text */
+}
+
+.forgot-password{
+    padding-left: 62px;
+    margin-top: 27px;
+    color: #797979;
+    font-size: 18px;
+}
+
+.forgot-password span{
+    color: #4c00b4;
+    cursor: pointer;
+}
+
+.submit-container{
+    display: flex;
+    gap: 30px;
+    margin: 60px auto;
+    flex-wrap: wrap; /* Allows buttons to stack on smaller screens */
+}
+
+.submit{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 220px;
+    height: 59px;
+    color: #fff;
+    background: #4c00b4;
+    border-radius: 50px;
+    font-size: 19px;
+    font-weight: 700;
+    cursor: pointer;
+    flex-grow: 1; /* Allows button to grow */
+}
+
+@media (max-width: 600px) {
+    .container {
+        margin-top: 100px;
+    }
+
+    .text {
+        font-size: 36px; /* Smaller font size for smaller screens */
+    }
+
+    .input img {
+        margin: 0 15px; /* Less margin for smaller screens */
+    }
+
+    .input input {
+        font-size: 16px; /* Smaller font size for smaller screens */
+    }
+}
