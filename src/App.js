@@ -1,24 +1,26 @@
 import "./App.css";
-import LoginSignup from "./Components/LoginSignup/LoginSignup.js";
-import Login from './Components/LoginSignup/Login';
-import Signup from './Components/LoginSignup/Signup';
-import ResetPassword from './Components/LoginSignup/ResetPassword';
+
+import {
+  BrowserRouter as Router,
+  Route,
+  Navigate,
+  Routes,
+} from "react-router-dom";
+import Login from "./Components/LoginSignup/Login";
+import Signup from "./Components/LoginSignup/Signup";
+import ResetPassword from "./Components/LoginSignup/ResetPassword";
 function App() {
+  return <Login />;
   return (
-    <div>
-      <LoginSignup/>
-    </div>
+    <Router>
+      <Routes>
+        <Route path='/login' component={Login} />
+        <Route path='/signup' component={Signup} />
+        <Route path='/reset-password' component={ResetPassword} />
+        <Route path='*' element={<Navigate to='/login' />} />
+      </Routes>
+    </Router>
   );
-  // return (
-  //   <Router>
-  //     <Switch>
-  //       <Route path="/login" component={Login} />
-  //       <Route path="/signup" component={Signup} />
-  //       <Route path="/reset-password" component={ResetPassword} />
-  //       <Redirect from="/" to="/login" exact />
-  //     </Switch>
-  //   </Router>
-  // );
 }
 
 export default App;
