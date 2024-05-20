@@ -105,6 +105,11 @@
     flex-grow: 1; /* Allows button to grow */
 }
 
+.gray {
+    background: #eaeaea;
+    color: #676767;
+}
+
 @media (max-width: 600px) {
     .container {
         margin-top: 100px;
@@ -121,4 +126,15 @@
     .input input {
         font-size: 16px; /* Smaller font size for smaller screens */
     }
+}
+
+.forgot-password {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.forgot-password span {
+    color: #4c00b4;
+    cursor: pointer;
+    text-decoration: underline;
 }
