@@ -92,7 +92,7 @@ const Login = () => {
       localStorage.setItem("jwt", response.data.jwtToken);
       localStorage.setItem("username", response.data.userName);
       navigate("/dashboard");
-    }else{
+    } else {
       alert(response.data);
     }
   };
