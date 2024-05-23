@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import axios from "axios";
-import "./LoginForm.css"; // Import the CSS file
+import "../LoginForm.css"; // Import the CSS file
+import { config } from "../constant";
 
 // Validation schema
 const schema = yup.object().shape({
@@ -14,6 +15,7 @@ const schema = yup.object().shape({
 });
 
 const ForgetPassword = () => {
+  const [response, setResponse] = useState("");
   const {
     register,
     handleSubmit,
@@ -25,10 +27,10 @@ const ForgetPassword = () => {
   const onSubmit = async (data) => {
     try {
       const response = await axios.post(
-        "http://127.0.0.1:5000/auth/reset-password",
+        `${config.url}/auth/forget-password`,
         data
       );
-      console.log(response.data);
+      setResponse(response.data);
       // Handle successful response, e.g., show a success message
     } catch (error) {
       console.error("There was an error!", error);
@@ -37,16 +39,17 @@ const ForgetPassword = () => {
   };
 
   return (
-    <div className="container">
+    <div className='container'>
       <h1>Reset Password</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div>
-          <label htmlFor="email">Email</label>
-          <input type="email" id="email" {...register("email")} />
+          <label htmlFor='email'>Email</label>
+          <input type='email' id='email' {...register("email")} />
           {errors.email && <p>{errors.email.message}</p>}
         </div>
-        <button type="submit">Reset Password</button>
+        <button type='submit'>Reset Password</button>
       </form>
+      {response}
     </div>
   );
 };
