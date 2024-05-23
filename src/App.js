@@ -5,20 +5,22 @@ import {
   Navigate,
   Routes,
 } from "react-router-dom";
-import Login from "./Components/LoginSignup/Login";
-import Signup from "./Components/LoginSignup/Signup";
-import ForgetPassword from "./Components/LoginSignup/ForgetPassword";
-import ResetPassword from "./Components/LoginSignup/ResetPassword";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import ForgetPassword from "./pages/ForgetPassword";
+import ResetPassword from "./pages/ResetPassword";
+import Dashboard from "./pages/dashboard";
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/forget-password" element={<ForgetPassword />} />
-        <Route path="/reset/:token" element={<ResetPassword />} />
-        <Route path="*" element={<Navigate to="/login" />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/signup' element={<Signup />} />
+        <Route path='/forget-password' element={<ForgetPassword />} />
+        <Route path='/reset/:token' element={<ResetPassword />} />
+        <Route path='/dashboard' element={<Dashboard />} />
+        <Route path='*' element={<Navigate to='/login' />} />
       </Routes>
     </Router>
   );

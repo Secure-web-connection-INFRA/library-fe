@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { config } from "../constant";
 
 const schema = yup
   .object({
@@ -19,6 +20,7 @@ const schema = yup
   .required();
 
 const ResetPassword = () => {
+  const [response, setResponse] = useState("");
   const {
     register,
     handleSubmit,
@@ -31,14 +33,11 @@ const ResetPassword = () => {
 
   const onSubmit = async (data) => {
     try {
-      const response = await axios.post(
-        "http://127.0.0.1:5000/auth/reset-password",
-        {
-          token,
-          password: data.password,
-        }
-      );
-      console.log(response.data);
+      const response = await axios.put(`${config.url}/auth/reset`, {
+        token,
+        password: data.password,
+      });
+      setResponse(response.data);
       navigate("/login"); // Redirect after successful password reset
     } catch (error) {
       console.error("Reset password error:", error);
@@ -46,24 +45,25 @@ const ResetPassword = () => {
   };
 
   return (
-    <div className="container">
+    <div className='container'>
       <h1>Reset Password</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div>
-          <label htmlFor="password">New Password</label>
-          <input type="password" id="password" {...register("password")} />
+          <label htmlFor='password'>New Password</label>
+          <input type='password' id='password' {...register("password")} />
           {errors.password && <p>{errors.password.message}</p>}
         </div>
         <div>
-          <label htmlFor="confirmPassword">Confirm Password</label>
+          <label htmlFor='confirmPassword'>Confirm Password</label>
           <input
-            type="password"
-            id="confirmPassword"
+            type='password'
+            id='confirmPassword'
             {...register("confirmPassword")}
           />
           {errors.confirmPassword && <p>{errors.confirmPassword.message}</p>}
         </div>
-        <button type="submit">Reset Password</button>
+        <button type='submit'>Reset Password</button>
+        {response && <div> {response}. Reset using the link.</div>}
       </form>
     </div>
   );
