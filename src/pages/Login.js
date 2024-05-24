@@ -89,7 +89,7 @@ const Login = () => {
     };
     const response = await axios.post(`${config.url}/auth/otp`, data);
     if (response.status) {
-      localStorage.setItem("jwt", response.data.jwtToken);
+      localStorage.setItem("token", response.data.jwtToken);
       localStorage.setItem("username", response.data.userName);
       navigate("/dashboard");
     } else {
@@ -122,27 +122,61 @@ const Login = () => {
   return (
     <div className='container'>
       <h1>Login</h1>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div>
+      <form style={{ textAlign: "right" }} onSubmit={handleSubmit(onSubmit)}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
           <label htmlFor='email'>Email</label>
           <input type='email' id='email' {...register("email")} />
-          {errors.email && <p>{errors.email.message}</p>}
         </div>
-        <div>
+        {errors.email && <p style={{ fontSize: 12 }}>{errors.email.message}</p>}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
           <label htmlFor='password'>Password</label>
           <input type='password' id='password' {...register("password")} />
-          {errors.password && <p>{errors.password.message}</p>}
         </div>
-        <p>
-          Forgot Password?{" "}
-          <span className='link' onClick={handleResetPassword}>
-            {" "}
-            Click Here
-          </span>
-        </p>
+        {errors.password && (
+          <p style={{ fontSize: 12 }}>{errors.password.message}</p>
+        )}
         <button type='submit'>Login</button>
       </form>
-      <button onClick={handleSignUp}>Sign Up</button>
+      <div
+        className='link'
+        style={{
+          cursor: "pointer",
+          fontWeight: 600,
+          textAlign: "center",
+          padding: 10,
+        }}
+        onClick={handleResetPassword}
+      >
+        Forgot Password?
+      </div>
+      <hr />
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        <div
+          style={{
+            cursor: "pointer",
+            border: "2px solid #3a2dbb",
+            borderRadius: 4,
+            padding: 5,
+            fontWeight: 700,
+            color: "#8600c2",
+          }}
+          onClick={handleSignUp}
+        >
+          Create an account
+        </div>
+      </div>
     </div>
   );
 };

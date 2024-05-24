@@ -40,14 +40,20 @@ const ForgetPassword = () => {
 
   return (
     <div className='container'>
-      <h1>Reset Password</h1>
+      <h1>Forget Password</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
           <label htmlFor='email'>Email</label>
           <input type='email' id='email' {...register("email")} />
-          {errors.email && <p>{errors.email.message}</p>}
         </div>
-        <button type='submit'>Reset Password</button>
+        {errors.email && <p style={{ fontSize: 12 }}>{errors.email.message}</p>}
+        <button type='submit'>Reset Link</button>
       </form>
       {response}
     </div>

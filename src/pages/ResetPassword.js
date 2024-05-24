@@ -48,20 +48,36 @@ const ResetPassword = () => {
     <div className='container'>
       <h1>Reset Password</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
           <label htmlFor='password'>New Password</label>
           <input type='password' id='password' {...register("password")} />
-          {errors.password && <p>{errors.password.message}</p>}
         </div>
-        <div>
+        {errors.password && (
+          <p style={{ fontSize: 12 }}>{errors.password.message}</p>
+        )}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
           <label htmlFor='confirmPassword'>Confirm Password</label>
           <input
             type='password'
             id='confirmPassword'
             {...register("confirmPassword")}
           />
-          {errors.confirmPassword && <p>{errors.confirmPassword.message}</p>}
         </div>
+        {errors.confirmPassword && (
+          <p style={{ fontSize: 12 }}>{errors.confirmPassword.message}</p>
+        )}
         <button type='submit'>Reset Password</button>
         {response && <div> {response}. Reset using the link.</div>}
       </form>

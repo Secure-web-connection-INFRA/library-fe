@@ -50,24 +50,57 @@ const Signup = () => {
     <div className='container'>
       <h1>Sign Up</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
           <label htmlFor='name'>Name</label>
           <input type='text' id='name' {...register("name")} />
-          {errors.name && <p>{errors.name.message}</p>}
         </div>
-        <div>
+        {errors.name && <p>{errors.name.message}</p>}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
           <label htmlFor='email'>Email</label>
           <input type='email' id='email' {...register("email")} />
-          {errors.email && <p>{errors.email.message}</p>}
         </div>
-        <div>
+        {errors.email && <p>{errors.email.message}</p>}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
           <label htmlFor='password'>Password</label>
           <input type='password' id='password' {...register("password")} />
-          {errors.password && <p>{errors.password.message}</p>}
         </div>
+        {errors.password && <p>{errors.password.message}</p>}
         <button type='submit'>Sign Up</button>
       </form>
-      <button onClick={handleLogin}>Login</button>
+      <div style={{ padding: 10, textAlign: "center" }}>
+        Already have account?
+        <span
+          className='link'
+          style={{
+            cursor: "pointer",
+            fontWeight: 600,
+            textAlign: "center",
+            padding: 10,
+            color: "#42006c",
+          }}
+          onClick={handleLogin}
+        >
+          Login
+        </span>
+      </div>
     </div>
   );
 };
