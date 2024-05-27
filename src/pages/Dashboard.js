@@ -31,12 +31,12 @@ const Dashboard = () => {
 
   const getBooks = async (storedData) => {
     try {
-      const response = await axios.get(`${config.url}/lib`, {
+      const response = await axios.get(`${config.url}/lib/`, {
         headers: {
           Authorization: `Bearer ${storedData}`,
         },
       });
-      setResults(response.data);
+      setResults(response.data.data);
       console.log(response);
     } catch (error) {
       localStorage.removeItem("token");
