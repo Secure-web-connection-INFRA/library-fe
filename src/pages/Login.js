@@ -21,6 +21,7 @@ const schema = yup.object().shape({
 
 const Login = () => {
   const [isotp, setisOtp] = useState(false);
+  const [error, setError] = useState(false);
   const [otp, setOTP] = useState(["", "", "", ""]);
   const inputRefs = [useRef(), useRef(), useRef(), useRef()];
   const {
@@ -39,7 +40,9 @@ const Login = () => {
       if (response.status === 200) {
         setisOtp(response.data);
       }
+      setError("");
     } catch (error) {
+      setError(error.response.data);
       console.error("There was an error!", error);
       // Handle error response
     }
@@ -87,21 +90,28 @@ const Login = () => {
       email: isotp.slice(21),
       otp: otp.join(""),
     };
-    const response = await axios.post(`${config.url}/auth/otp`, data);
-    if (response.status) {
-      localStorage.setItem("token", response.data.jwtToken);
-      localStorage.setItem("username", response.data.userName);
-      navigate("/dashboard");
-    } else {
-      alert(response.data);
+    try {
+      const response = await axios.post(`${config.url}/auth/otp`, data);
+      if (response.status === 200) {
+        localStorage.setItem("token", response.data.jwtToken);
+        localStorage.setItem("username", response.data.userName);
+        navigate("/dashboard");
+      } else {
+        alert(response.data);
+      }
+      setError("");
+    } catch (error) {
+      setError(error.response.data);
     }
   };
 
   if (isotp) {
     return (
-      <div>
-        <h1>OTP</h1>
-        <div>{isotp}</div>
+      <div style={{ textAlign: "center" }}>
+        <div style={{ color: "white", fontWeight: 600 }}>
+          <h1>OTP</h1>
+          <div>{isotp}</div>
+        </div>
         {otp.map((digit, index) => (
           <input
             key={index}
@@ -111,10 +121,13 @@ const Login = () => {
             onChange={(e) => handleChange(index, e.target.value)}
             onPaste={handlePaste}
             ref={inputRefs[index]}
-            style={{ width: 10, margin: 10 }}
+            style={{ minWidth: 10, maxWidth: 20, margin: 10 }}
           />
         ))}
-        <button onClick={handleOtp}>Submit</button>
+        {error && <p style={{ fontSize: 12 }}>{error}</p>}
+        <div>
+          <button onClick={handleOtp}>Submit</button>
+        </div>
       </div>
     );
   }
@@ -147,6 +160,7 @@ const Login = () => {
         {errors.password && (
           <p style={{ fontSize: 12 }}>{errors.password.message}</p>
         )}
+        {error && <p style={{ fontSize: 12 }}>{error}</p>}
         <button type='submit'>Login</button>
       </form>
       <div

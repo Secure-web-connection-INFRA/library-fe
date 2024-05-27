@@ -21,6 +21,8 @@ const schema = yup
 
 const ResetPassword = () => {
   const [response, setResponse] = useState("");
+  const [error, setError] = useState();
+
   const {
     register,
     handleSubmit,
@@ -39,7 +41,9 @@ const ResetPassword = () => {
       });
       setResponse(response.data);
       navigate("/login"); // Redirect after successful password reset
+      setError("");
     } catch (error) {
+      setError(error.response.data);
       console.error("Reset password error:", error);
     }
   };
@@ -78,6 +82,7 @@ const ResetPassword = () => {
         {errors.confirmPassword && (
           <p style={{ fontSize: 12 }}>{errors.confirmPassword.message}</p>
         )}
+        {error && <p style={{ fontSize: 12 }}>{error}</p>}
         <button type='submit'>Reset Password</button>
         {response && <div> {response}. Reset using the link.</div>}
       </form>

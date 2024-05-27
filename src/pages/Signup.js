@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -21,6 +21,7 @@ const schema = yup.object().shape({
 });
 
 const Signup = () => {
+  const [error, setError] = useState();
   const {
     register,
     handleSubmit,
@@ -33,12 +34,11 @@ const Signup = () => {
 
   const onSubmit = async (data) => {
     try {
-      const response = await axios.post(`${config.url}/auth/signup`, data);
-      console.log(response.data);
-      // Handle successful response
+      await axios.post(`${config.url}/auth/signup`, data);
+      setError("");
     } catch (error) {
+      setError(error.response.data);
       console.error("There was an error!", error);
-      // Handle error response
     }
   };
 
@@ -84,6 +84,7 @@ const Signup = () => {
         </div>
         {errors.password && <p>{errors.password.message}</p>}
         <button type='submit'>Sign Up</button>
+        {error && <p style={{ fontSize: 12 }}>{error}</p>}
       </form>
       <div style={{ padding: 10, textAlign: "center" }}>
         Already have account?

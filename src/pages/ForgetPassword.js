@@ -16,6 +16,7 @@ const schema = yup.object().shape({
 
 const ForgetPassword = () => {
   const [response, setResponse] = useState("");
+  const [error, setError] = useState();
   const {
     register,
     handleSubmit,
@@ -31,10 +32,10 @@ const ForgetPassword = () => {
         data
       );
       setResponse(response.data);
-      // Handle successful response, e.g., show a success message
+      setError("");
     } catch (error) {
+      setError(error.response.data);
       console.error("There was an error!", error);
-      // Handle error response
     }
   };
 
@@ -53,6 +54,7 @@ const ForgetPassword = () => {
           <input type='email' id='email' {...register("email")} />
         </div>
         {errors.email && <p style={{ fontSize: 12 }}>{errors.email.message}</p>}
+        {error && <p style={{ fontSize: 12 }}>{error}</p>}
         <button type='submit'>Reset Link</button>
       </form>
       {response}

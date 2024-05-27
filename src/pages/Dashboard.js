@@ -30,13 +30,19 @@ const Dashboard = () => {
   };
 
   const getBooks = async (storedData) => {
-    const response = await axios.get(`${config.url}/lib`, {
-      headers: {
-        Authorization: `Bearer ${storedData}`,
-      },
-    });
-    setResults(response.data);
-    console.log(response);
+    try {
+      const response = await axios.get(`${config.url}/lib`, {
+        headers: {
+          Authorization: `Bearer ${storedData}`,
+        },
+      });
+      setResults(response.data);
+      console.log(response);
+    } catch (error) {
+      localStorage.removeItem("token");
+      localStorage.removeItem("username");
+      navigate("/login");
+    }
   };
 
   const verifyHMAC = (data, receivedHMAC) => {
@@ -58,16 +64,21 @@ const Dashboard = () => {
           },
         }
       );
-      if (verifyHMAC(response.data.file, response.data.key)) {
-        downloadPDF(response.data.file, response.data.title);
+
+      if (response?.data?.file) {
+        if (verifyHMAC(response.data.file, response.data.key)) {
+          downloadPDF(response.data.file, response.data.title);
+        } else {
+          alert("Data has been tampered");
+        }
       } else {
-        console.log(":: tampered data");
+        alert("File not available");
       }
-      // setResults(response.data);
     } catch (error) {
       console.log(error);
     }
   };
+
   const downloadPDF = (pdfData, title) => {
     // Create a blob from the base64 string
     const byteCharacters = atob(pdfData);
@@ -93,34 +104,9 @@ const Dashboard = () => {
     // Remove the link from the DOM
     document.body.removeChild(link);
   };
-  // const downloadPDF = (pdfData, title) => {
-  //   // Create a blob from the base64 string
-  //   console.log(":: blob start");
-  //   const blob = new Blob([Buffer.from(pdfData, "base64")], {
-  //     type: "application/pdf",
-  //   });
-
-  //   // Create a URL for the blob
-  //   const url = window.URL.createObjectURL(blob);
-
-  //   // Create a link element
-  //   const link = document.createElement("a");
-  //   link.href = url;
-  //   link.download = title;
-
-  //   // Dispatch a click event on the link
-  //   document.body.appendChild(link);
-  //   link.click();
-
-  //   // Remove the link from the DOM
-  //   document.body.removeChild(link);
-  // };
 
   useEffect(() => {
-    // Retrieve data from local storage
-    const storedData = localStorage.getItem("token");
-    console.log(storedData);
-    // Update state with the retrieved data
+    const storedData = localStorage.getItem("token") ?? false;
     if (storedData) {
       setToken(storedData);
       getBooks(storedData);
@@ -130,7 +116,7 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <>
+    <div>
       <div className='search-container'>
         <form onSubmit={handleSearch} className='search-form'>
           <input
@@ -150,15 +136,32 @@ const Dashboard = () => {
         </form>
       </div>
       {typeof results[0] === "string" ? (
-        <div>{results[0]}</div>
+        <div style={{ color: "white", fontWeight: "bolder" }}>{results[0]}</div>
       ) : (
-        <div>
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: 20,
+            alignItems: "center",
+          }}
+        >
           {results?.map((book) => (
-            <div className={"book-block"}>
-              <img src={`data:image/jpeg;base64,${book.image}`} alt='Fetched' />
-              <div>
-                <div style={{ display: "flex", alignItems: "center" }}>
-                  <div style={{ width: "calc(100% - 50px)" }}>
+            <div key={book.id} className={"book-block"}>
+              <img
+                src={`data:image/jpeg;base64,${book.image}`}
+                alt='Fetched'
+                style={{ maxWidth: "100%", height: 200, overflow: "hidden" }}
+              />
+              <div style={{ marginTop: "10px" }}>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  <div style={{ maxWidth: "calc(100% - 60px)" }}>
                     <span className='title'>{book.title}</span>
                     <span className='year'>({book.publishedOn})</span>
                   </div>
@@ -167,16 +170,22 @@ const Dashboard = () => {
                     onClick={() => handleDownload(book.id)}
                     src={download}
                     alt='Fetched'
+                    style={{ cursor: "pointer" }}
                   />
                 </div>
-                <div className='desc'>{book.description.slice(0, 110)}...</div>
-                <div className='author'> - {book.author}</div>
+                <div className='desc' style={{ marginTop: "5px" }}>
+                  {book.description.slice(0, 110)}...
+                </div>
+                <div className='author' style={{ marginTop: "5px" }}>
+                  {" "}
+                  - {book.author}
+                </div>
               </div>
             </div>
           ))}
         </div>
       )}
-    </>
+    </div>
   );
 };
 
