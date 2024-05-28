@@ -109,6 +109,7 @@ const Dashboard = () => {
     e.preventDefault();
     localStorage.removeItem("token");
     localStorage.removeItem("username");
+    navigate("/login");
   };
 
   useEffect(() => {
