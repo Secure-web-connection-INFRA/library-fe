@@ -1,3 +1,3 @@
 export const config = {
-  url: "http://127.0.0.1:5000",
+  url: "http://ip-172-31-13-23.ap-southeast-2.compute.internal",
 };

@@ -31,7 +31,7 @@ const Dashboard = () => {
 
   const getBooks = async (storedData) => {
     try {
-      const response = await axios.get(`${config.url}/lib/`, {
+      const response = await axios.get(`${config.url}/lib/all`, {
         headers: {
           Authorization: `Bearer ${storedData}`,
         },
