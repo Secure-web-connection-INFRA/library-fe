@@ -105,6 +105,12 @@ const Dashboard = () => {
     document.body.removeChild(link);
   };
 
+  const handleLogout = (e) => {
+    e.preventDefault();
+    localStorage.removeItem("token");
+    localStorage.removeItem("username");
+  };
+
   useEffect(() => {
     const storedData = localStorage.getItem("token") ?? false;
     if (storedData) {
@@ -117,6 +123,19 @@ const Dashboard = () => {
 
   return (
     <div>
+      <div
+        style={{
+          position: "absolute",
+          top: 10,
+          right: 10,
+          color: "white",
+          cursor: "pointer",
+          fontWeight: 600,
+        }}
+        onClick={handleLogout}
+      >
+        Logout
+      </div>
       <div className='search-container'>
         <form onSubmit={handleSearch} className='search-form'>
           <input
