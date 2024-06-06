@@ -129,13 +129,40 @@ const Dashboard = () => {
           position: "absolute",
           top: 10,
           right: 10,
-          color: "white",
-          cursor: "pointer",
-          fontWeight: 600,
+          display: "flex",
+          gap: 20,
         }}
-        onClick={handleLogout}
       >
-        Logout
+        <div
+          style={{
+            color: "white",
+            cursor: "pointer",
+            fontWeight: 600,
+          }}
+          onClick={() => navigate("/access")}
+        >
+          Access
+        </div>
+        <div
+          style={{
+            color: "white",
+            cursor: "pointer",
+            fontWeight: 600,
+          }}
+          onClick={() => navigate("/upload")}
+        >
+          Upload
+        </div>
+        <div
+          style={{
+            color: "white",
+            cursor: "pointer",
+            fontWeight: 600,
+          }}
+          onClick={handleLogout}
+        >
+          Logout
+        </div>
       </div>
       <div className='search-container'>
         <form onSubmit={handleSearch} className='search-form'>
@@ -164,6 +191,7 @@ const Dashboard = () => {
             flexWrap: "wrap",
             gap: 20,
             alignItems: "center",
+            justifyContent: "space-around",
           }}
         >
           {results?.map((book) => (
@@ -182,7 +210,10 @@ const Dashboard = () => {
                   }}
                 >
                   <div style={{ maxWidth: "calc(100% - 60px)" }}>
-                    <span className='title'>{book.title}</span>
+                    <span className='title'>
+                      {book.title.slice(0, 110)}
+                      {book.title.length < 150 ? "" : "..."}
+                    </span>
                     <span className='year'>({book.publishedOn})</span>
                   </div>
                   <img

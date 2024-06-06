@@ -32,18 +32,19 @@ const Signup = () => {
 
   const navigate = useNavigate();
 
+  const handleLogin = () => {
+    navigate("/login");
+  };
+
   const onSubmit = async (data) => {
     try {
       await axios.post(`${config.url}/auth/signup`, data);
       setError("");
+      handleLogin();
     } catch (error) {
       setError(error.response.data);
       console.error("There was an error!", error);
     }
-  };
-
-  const handleLogin = () => {
-    navigate("/login");
   };
 
   return (

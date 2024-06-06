@@ -11,6 +11,8 @@ import Signup from "./pages/Signup";
 import ForgetPassword from "./pages/ForgetPassword";
 import ResetPassword from "./pages/ResetPassword";
 import Dashboard from "./pages/Dashboard";
+import RoleChangeForm from "./pages/Role";
+import BookUploadForm from "./pages/Upload";
 
 function App() {
   return (
@@ -21,6 +23,8 @@ function App() {
         <Route path='/forget-password' element={<ForgetPassword />} />
         <Route path='/reset/:token' element={<ResetPassword />} />
         <Route path='/dashboard' element={<Dashboard />} />
+        <Route path='/access' element={<RoleChangeForm />} />
+        <Route path='/upload' element={<BookUploadForm />} />
         <Route path='*' element={<Navigate to='/dashboard' />} />
       </Routes>
     </Router>

@@ -95,6 +95,7 @@ const Login = () => {
       if (response.status === 200) {
         localStorage.setItem("token", response.data.jwtToken);
         localStorage.setItem("username", response.data.userName);
+        localStorage.setItem("role", response.data.role);
         navigate("/dashboard");
       } else {
         alert(response.data);
